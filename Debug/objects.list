@@ -1,0 +1,6 @@
+"./Src/004spi_tx_test.o"
+"./Src/syscalls.o"
+"./Src/sysmem.o"
+"./Startup/startup_stm32f446retx.o"
+"./drivers/Src/stm32f446xx_gpio.o"
+"./drivers/Src/stm32f446xx_spi.o"
