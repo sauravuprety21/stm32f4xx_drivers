@@ -224,7 +224,7 @@ void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint3
 
 		if(pSPIHandle->SPIConfig.SPI_DFF == SPI_DFF_16BITS)
 		{
-			pSPIHandle->pSPIx->DR = *((uint16_t*)pTxBuffer);
+			pSPIHandle->pSPIx->DR = *(uint16_t*)pTxBuffer;
 			Len--;
 			Len--;
 			(uint16_t*)pTxBuffer++;

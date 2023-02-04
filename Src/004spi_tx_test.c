@@ -22,21 +22,24 @@
 void SPI2_GPIOInits(void);
 void SPI2_Inits(void);
 
-SPI_Handle_t SPI2handle;
 
+SPI_Handle_t SPI2handle;
 
 int main(void)
 {
+
 	char user_data[] = "Hello World";
 
 	SPI2_GPIOInits();
-	SPI2_Inits();
 
+	SPI2_Inits();
 
 	SPI_SSIConfig(&SPI2handle, ENABLE);
 	SPI_PeripheralControl(&SPI2handle, ENABLE);
 
 	SPI_SendData(&SPI2handle, (uint8_t *)user_data, strlen(user_data));
+
+	SPI_DeInit(&SPI2handle);
 
 	while(1);
 
@@ -55,9 +58,9 @@ void SPI2_GPIOInits(void)
 	SPI2_GPIOPin.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 	SPI2_GPIOPin.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 	SPI2_GPIOPin.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYP_PP;
+	SPI2_GPIOPin.pGPIOx = GPIOC;
 
 ////	SPI-2 MISO
-	SPI2_GPIOPin.pGPIOx = GPIOC;
 //	SPI2_GPIOPin.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_2;
 //	GPIO_Init(&SPI2_GPIOPin);
 
@@ -81,13 +84,11 @@ void SPI2_Inits(void)
 	SPI2handle.pSPIx = SPI2;
 	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVMOD_MSTR;
 	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUSCFG_FD;
-	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_MAX;
+	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_MIN;
 	SPI2handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
 	SPI2handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
 	SPI2handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
 	SPI2handle.SPIConfig.SPI_SSM = SPI_SSM_EN;
-
 	SPI_Init(&SPI2handle);
-
 }
 
