@@ -68,6 +68,32 @@ void GPIOBtnInits(void)
 
 
 
+void SPI_GPIOInits(void)
+{
+	GPIO_Handle_t spiGPIO;
+	// GPIO Pins used for SPI using ALT Function mode (AF5)
+	spiGPIO.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	spiGPIO.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYP_PP;
+	spiGPIO.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	spiGPIO.GPIO_PinConfig.GPIO_PinAltFunMode = GPIO_ALTFN_MOD_5;
+	// MISO , MOSI, SLCK pins lie on GPIO c
+	spiGPIO.pGPIOx = GPIOC;
+	// MISO
+	spiGPIO.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_2;
+	GPIO_Init(&spiGPIO);
+	// MOSI
+	spiGPIO.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_3;
+	GPIO_Init(&spiGPIO);
+	// SCLK
+	spiGPIO.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	GPIO_Init(&spiGPIO);
+	// NSS on GPIO B9
+	spiGPIO.pGPIOx = GPIOB;
+	spiGPIO.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9;
+	GPIO_Init(&spiGPIO);
+
+}
+
 void EXTI4_IRQHandler(void)
 {
 
