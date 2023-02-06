@@ -61,6 +61,7 @@ typedef struct
 #define SPI_SCLK_DIV256			7
 #define SPI_SCLK_MAX			SPI_SCLK_DIV2
 #define SPI_SCLK_MIN			SPI_SCLK_DIV256
+#define SPI_SCLK_MED			SPI_SCLK_DIV32
 
 /*
  * @SPI_DFF
