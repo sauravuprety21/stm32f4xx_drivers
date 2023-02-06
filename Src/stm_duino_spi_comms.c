@@ -31,6 +31,7 @@ char user_data[] = "Hello World";
 
 void GPIOBtnInits(void);
 void SPI_GPIOInits(void);
+void SPI2_Inits(void);
 
 int main(void)
 {
@@ -66,7 +67,21 @@ void GPIOBtnInits(void)
 }
 
 
+void SPI2_Inits(void)
+{
+	/*
+	 * Setup the SPI2 bus for comms with duino in full duplex mode, with stm board as master...
+	 */
+	spi2Handle.pSPIx = SPI2;
+	spi2Handle.SPIConfig.SPI_BusConfig = SPI_BUSCFG_FD;
+	spi2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVMOD_MSTR;
+	spi2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+	spi2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_DIV8;
+	spi2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+	spi2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
 
+	SPI_Init(&spi2Handle);
+}
 
 void SPI_GPIOInits(void)
 {
