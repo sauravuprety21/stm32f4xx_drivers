@@ -240,7 +240,7 @@ void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint3
 
 
 /*********************************************************************************
- * @fn									-
+ * @fn									- SPI_PeripheralControl
  *
  * @brief								-
  * @param[in]							-
@@ -263,7 +263,7 @@ void SPI_PeripheralControl(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi)
 
 
 /*********************************************************************************
- * @fn									-
+ * @fn									- SPI_SSIConfig
  *
  * @brief								-
  * @param[in]							-
@@ -281,6 +281,30 @@ void SPI_SSIConfig(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi)
 	} else
 	{
 		pSPIHandle->pSPIx->CR1 &= ~(1 << SPI_CR1_SSI);
+	}
+}
+
+
+
+/*********************************************************************************
+ * @fn									- SPI_SSOEConfig
+ *
+ * @brief								-
+ * @param[in]							-
+ * @param[in]							-
+ *
+ * @return								-
+ *
+ * @Note								-
+ */
+void SPI_SSOEConfig(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi)
+{
+	if(EnorDi)
+	{
+		pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_SSOE);
+	} else
+	{
+		pSPIHandle->pSPIx->CR1 &= ~(1 << SPI_CR2_SSOE);
 	}
 }
 

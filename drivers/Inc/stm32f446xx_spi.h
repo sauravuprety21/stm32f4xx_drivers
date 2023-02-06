@@ -130,7 +130,7 @@ void SPI_IRQHandling(SPI_Handle_t __vo *const pSPIhandle);
  */
 void SPI_PeripheralControl(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi);
 void SPI_SSIConfig(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi);
-
+void SPI_SSOEConfig(SPI_Handle_t __vo *const pSPIHandle, uint8_t EnorDi);
 
 /*
  * SPI Flags (Status Register)
