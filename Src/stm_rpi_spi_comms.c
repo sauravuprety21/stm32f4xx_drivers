@@ -45,14 +45,14 @@ char user_data[] = "Hello World";			// Payload to send over SPI
 
 int main(void)
 {
-	GPIOLedInits();							// @GPIOLedInits
-	GPIOBtnInits();							// @GPIOBtnInits with interrupt config. as per @GPIO_Init
+	GPIOLedInits();								// @GPIOLedInits
+	GPIOBtnInits();								// @GPIOBtnInits with interrupt config. as per @GPIO_Init
 
-	SPI2_GPIOInits();						// @SPI2_GPIOInits - Init GPIO pins dedicated to SPI
-	SPI2_Inits();							// @SPI2_Inits	
+	SPI2_GPIOInits();							// @SPI2_GPIOInits - Init GPIO pins dedicated to SPI
+	SPI2_Inits();								// @SPI2_Inits	
 
-	SPI_SSOEConfig(&spi2Handle, ENABLE);
-	SPI_PeripheralControl(&spi2Handle, ENABLE);
+	SPI_SSOEConfig(&spi2Handle, ENABLE);		// enable NSS Output in HW slave slction mode (single master)
+	SPI_PeripheralControl(&spi2Handle, ENABLE); // enable SPI2 periph.
 
 	while(1);
 	return -1;
