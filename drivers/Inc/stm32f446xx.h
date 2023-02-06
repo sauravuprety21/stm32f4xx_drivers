@@ -69,6 +69,9 @@
 #define NVIC_IRQ_PRI13			13
 #define NVIC_IRQ_PRI14			14
 #define NVIC_IRQ_PRI15			15
+#define NVIC_IRQ_PRI16			16
+#define NVIC_IRQ_PRI17			17
+#define NVIC_IRQ_PRI18			18
 
 
 /*
