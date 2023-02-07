@@ -9,17 +9,26 @@
 #define INC_STM32F446XX_SPI_H_
 
 /*
+ * Possible SPI application states
+ */
+#define SPI_READY				0
+#define SPI_BSY_RX				1
+#define SPI_BSY_TX				2
+
+
+
+/*
  * Configuration structure for SPIx peripheral
  */
 typedef struct
 {
-	uint8_t SPI_DeviceMode;				/*|< Possible values from @SPI_DeviceMode*/
-	uint8_t SPI_BusConfig;				/*|< Possible values from @SPI_BusConfig*/
-	uint8_t SPI_SclkSpeed;				/*|< Possible values from @SPI_SclkSpeed*/
-	uint8_t SPI_DFF;					/*|< Possible values from @SPI_DFF*/
-	uint8_t SPI_CPHA;					/*|< Possible values from @SPI_CPHA*/
-	uint8_t SPI_CPOL;					/*|< Possible values from @SPI_CPOL*/
-	uint8_t SPI_SSM;					/*|< Possible values from @SPI_SSM*/
+	uint8_t 		SPI_DeviceMode;				/*|< Possible values from @SPI_DeviceMode*/
+	uint8_t 		SPI_BusConfig;				/*|< Possible values from @SPI_BusConfig*/
+	uint8_t 		SPI_SclkSpeed;				/*|< Possible values from @SPI_SclkSpeed*/
+	uint8_t 		SPI_DFF;					/*|< Possible values from @SPI_DFF*/
+	uint8_t 		SPI_CPHA;					/*|< Possible values from @SPI_CPHA*/
+	uint8_t 		SPI_CPOL;					/*|< Possible values from @SPI_CPOL*/
+	uint8_t 		SPI_SSM;					/*|< Possible values from @SPI_SSM*/
 }SPI_Config_t;
 
 
@@ -28,8 +37,16 @@ typedef struct
  */
 typedef struct
 {
-	SPI_RegDef_t *pSPIx;					/*!<Holds BASE_ADDR of SPIx peripheral>*/
-	SPI_Config_t SPIConfig;
+	SPI_RegDef_t 	*pSPIx;					/*!<Holds BASE_ADDR of SPIx peripheral>*/
+	SPI_Config_t 	SPIConfig;
+
+	uint8_t			*pTxBuffer;				/*!<Store address of Tx Buffer>*/
+	uint8_t			*pRxBuffer;				/*!<Store address of Rx Buffer>*/
+	uint32_t		TxLen;					/*!<Store length of Tx Buffer>*/
+	uint32_t		RxLen;					/*!<Store length of Rx Buffer>*/
+	uint8_t			TxState;				/*!<Store Tx state>*/
+	uint8_t 		RxState;				/*!<Store Rx state>*/
+
 }SPI_Handle_t;
 
 
@@ -116,7 +133,8 @@ void SPI_DeInit(SPI_Handle_t __vo *const pSPIHandle);
 void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint32_t Len);
 void SPI_ReceiveData(SPI_Handle_t __vo *const pSPIhandle, uint8_t pRxBuffer, uint32_t Len);
 
-
+void SPI_SendData_IT(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint32_t Len);
+void SPI_ReceiveData_IT(SPI_Handle_t __vo *const pSPIhandle, uint8_t pRxBuffer, uint32_t Len);
 /*
  * IRQ configuration and ISR handling
  */
