@@ -53,6 +53,7 @@
 /*
  * IRQ Priority Macros
  */
+
 #define NVIC_IRQ_PRI0			0
 #define NVIC_IRQ_PRI1			1
 #define NVIC_IRQ_PRI2			2
@@ -73,6 +74,10 @@
 #define NVIC_IRQ_PRI17			17
 #define NVIC_IRQ_PRI18			18
 
+#define NVIC_IRQ_PRI42			42
+#define NVIC_IRQ_PRI43			43
+#define NVIC_IRQ_PRI58			58
+#define NVIC_IRQ_PRI91			91
 
 /*
  * ******************************************************************************** *
@@ -427,6 +432,16 @@ typedef struct
 #define IRQ_NO_EXTI4			10
 #define IRQ_NO_EXTI9_5			23
 #define IRQ_NO_EXTI15_10		40
+
+
+/*
+ * SPI IRQ Numbers
+ */
+#define IRQ_NO_SPI1				35
+#define IRQ_NO_SPI2				36
+#define IRQ_NO_SPI3				51
+#define IRQ_NO_SPI4				84
+
 
 
 /*
