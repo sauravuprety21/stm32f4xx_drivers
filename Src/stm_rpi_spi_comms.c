@@ -41,8 +41,6 @@ SPI_Handle_t spi2Handle;
 
 char user_data[] = "Hello World";			// Payload to send over SPI
 
-
-
 int main(void)
 {
 	GPIOLedInits();								// @GPIOLedInits
@@ -52,7 +50,7 @@ int main(void)
 	SPI2_Inits();								// @SPI2_Inits	
 
 	SPI_SSOEConfig(&spi2Handle, ENABLE);		// enable NSS Output in HW slave slction mode (single master)
-	SPI_PeripheralControl(&spi2Handle, ENABLE); // enable SPI2 periph.
+
 
 	while(1);
 	return -1;
@@ -77,7 +75,15 @@ void EXTI4_IRQHandler(void)
 	// Set (clears) EXTI->PRx (Pending Register); lets process know interrupt handled
 	GPIO_IRQHandling(btn.GPIO_PinConfig.GPIO_PinNumber);		
 	GPIO_ToggleOutputPin(&ledPin);										// toggle external LED
-	SPI_SendData(&spi2Handle, (uint8_t*)user_data, strlen(user_data));	// send "Hello World" over SPI2
+
+	SPI_PeripheralControl(&spi2Handle, ENABLE); 						// enable SPI2 periph.
+	uint8_t dataLen = strlen(user_data);
+	SPI_SendData(&spi2Handle, &dataLen, 1);								// send length information
+	SPI_SendData(&spi2Handle, (uint8_t*)user_data, strlen(user_data));  // send "Hello World" over SPI2
+
+	while(SPI_GetFlagStatus(&spi2Handle, SPI_BSY_FLAG));				// Hang while spi is busy
+
+	SPI_PeripheralControl(&spi2Handle, DISABLE);						// disable SPI2 periph.
 }
 
 
