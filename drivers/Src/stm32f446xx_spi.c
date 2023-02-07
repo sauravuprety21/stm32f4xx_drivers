@@ -240,13 +240,47 @@ void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint3
 
 
 /*********************************************************************************
- * @fn									- SPI_PeripheralControl
+ * @fn									- SPI_RecvData
  *
  * @brief								-
  * @param[in]							-
  * @param[in]							-
  *
  * @return								-
+ *
+ * @Note								-
+ */
+void SPI_RecvData( SPI_Handle_t __vo *const pSPIHandle, uint8_t *pRxBuffer, uint32_t Len)
+{
+	while (Len > 0)
+	{
+		while(SPI_GetFlagStatus(pSPIHandle, SPI_RXNE_FLAG));		// Wait until Rx buffer full
+
+		if(pSPIHandle->SPIConfig.SPI_DFF == SPI_DFF_16BITS)
+		{
+			*(uint16_t*)pRxBuffer = pSPIHandle->pSPIx->DR;
+			Len--;
+			Len--;
+			(uint16_t*)pRxBuffer++;
+
+		} else {
+			// else (DDF == 8BITS)
+			*pRxBuffer = pSPIHandle->pSPIx->DR;
+			Len--;
+			pRxBuffer++;
+	}
+}
+
+
+
+/*********************************************************************************
+ * @fn									- SPI_PeripheralControl
+ *
+ * @brief								- Enable or Disable the SPI perih using pSPIx->CR1 SPE bit
+ * @param[in]							- pointer to SPI handle structure
+ * @param[in]							- ENABLE or DISABLE
+ *
+ * @return								- None
  *
  * @Note								-
  */
