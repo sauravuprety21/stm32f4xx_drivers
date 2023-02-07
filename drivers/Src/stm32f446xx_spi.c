@@ -239,6 +239,93 @@ void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint3
 }
 
 
+
+/*********************************************************************************
+ * @fn									- SPI_IRQInterruptConfig
+ *
+ * @brief								-
+ * @param[in]							-
+ * @param[in]							-
+ *
+ * @return								-
+ *
+ * @Note								-
+ */
+void SPI_IRQInterruptConfig(uint8_t const IRQNumber, uint8_t const EnorDi)
+{
+	uint8_t temp1 = IRQNumber / 32;
+	uint8_t temp2 = IRQNumber % 32;
+
+	if(EnorDi)			//ENABLE
+	// Set corresponding bit for the right INTERRUPT SET ENABLE REGISTER
+	{
+		switch (temp1)
+		{
+			case 0:
+				*NVIC_ISER0 |= (1 << temp2);
+				break;
+			case 1:
+				*NVIC_ISER1 |= (1 << temp2);
+				break;
+			case 2:
+				*NVIC_ISER2 |= (1 << temp2);
+				break;
+		}
+	} else {	//DISABLE
+		// Set corresponding bit for the right INTERRUPT CLEAR ENABLE REGISTER
+		switch (temp1)
+		{
+			case 0:
+				*NVIC_ICER0 |= (1 << temp2);
+				break;
+			case 1:
+				*NVIC_ICER1 |= (1 << temp2);
+				break;
+			case 2:
+				*NVIC_ICER2 |= (1 << temp2);
+				break;
+		}
+	}
+}
+
+
+
+/*********************************************************************************
+ * @fn									- SPI_IRQPriorityConfig
+ *
+ * @brief								-
+ * @param[in]							-
+ * @param[in]							-
+ *
+ * @return								-
+ *
+ * @Note								-
+ */
+void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority)
+{
+	uint8_t temp1 = IRQNumber / 4;
+	uint8_t temp2 = IRQNumber % 4;
+
+	*(NVIC_PR_BASEADDR + 4*temp1) &= ~(0xFF << (8 * temp2 + 4));
+	*(NVIC_PR_BASEADDR + 4*temp1) |= (IRQPriority << (8 * temp2 + 4));
+}
+
+
+
+/*********************************************************************************
+ * @fn									-
+ *
+ * @brief								-
+ * @param[in]							-
+ * @param[in]							-
+ *
+ * @return								-
+ *
+ * @Note								-
+ */
+void SPI_IRQHandling(SPI_Handle_t __vo *const pSPIhandle);
+
+
 /*********************************************************************************
  * @fn									- SPI_RecvData
  *
