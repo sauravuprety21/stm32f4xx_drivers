@@ -131,10 +131,10 @@ void SPI_DeInit(SPI_Handle_t __vo *const pSPIHandle);
  * Data send and receive
  */
 void SPI_SendData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint32_t Len);
-void SPI_ReceiveData(SPI_Handle_t __vo *const pSPIhandle, uint8_t pRxBuffer, uint32_t Len);
+void SPI_ReceiveData(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
 
-void SPI_SendData_IT(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint32_t Len);
-void SPI_ReceiveData_IT(SPI_Handle_t __vo *const pSPIhandle, uint8_t pRxBuffer, uint32_t Len);
+uint8_t SPI_SendData_IT(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pTxBuffer, uint32_t Len);
+uint8_t SPI_ReceiveData_IT(SPI_Handle_t __vo *const pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
 /*
  * IRQ configuration and ISR handling
  */
